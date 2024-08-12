@@ -8,7 +8,7 @@ const port = 7000;
 app.use(bodyParser.json());
 
 // Webhook endpoint to receive POST requests
-app.get('/webhook', (req, res) => {
+app.post('/webhook', (req, res) => {
     const receivedData = req.body;
 
     // Log the received data to the console
