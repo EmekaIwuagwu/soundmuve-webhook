@@ -43,7 +43,7 @@ const transactionSchema = new mongoose.Schema({
     },
     created_at: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
     },
 });
 
@@ -56,12 +56,12 @@ app.use(bodyParser.json());
 app.post('/webhook', async (req, res) => {
     const receivedData = req.body;
 
-    try {
-        // Extract the fields from the received data
-        const { status, email, narration, credit, debit, amount, currency, balance } = receivedData;
+    // Log the received data to the console
+    console.log('Received webhook request payload:', JSON.stringify(receivedData, null, 2));
 
-        // Log the received data to the console
-        console.log('Received webhook request:', receivedData);
+    try {
+        // Extract relevant fields from the received data
+        const { status, email, narration, credit, debit, amount, currency, balance } = receivedData;
 
         // Create a new transaction document
         const newTransaction = new Transaction({
@@ -78,7 +78,7 @@ app.post('/webhook', async (req, res) => {
         // Save the transaction to the database
         await newTransaction.save();
 
-        // Respond with the message and the received data
+        // Respond with the message and the saved data
         res.status(200).json({
             message: 'Webhook received and transaction saved!',
             data: newTransaction,
